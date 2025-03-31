@@ -1,0 +1,12 @@
+security-demo-app-full/
+├── node_modules/
+├── public/
+│   ├── index.html
+│   ├── style.css
+│   └── script.js
+├── .env
+├── .gitignore
+├── package.json
+├── package-lock.json
+├── server.js
+└── setup_database.sql

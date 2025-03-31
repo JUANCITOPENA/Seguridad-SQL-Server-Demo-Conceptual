@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Seguridad Completa SQL Server + Node.js</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Demo Funcional Completa: Seguridad Backend + SQL Server 🛡️</h1>
+        <p><strong>Importante:</strong> Esta demo ilustra conceptos. La seguridad en producción requiere HTTPS, manejo seguro de sesiones/tokens (JWT), validación exhaustiva de entradas, auditoría y más.</p>
+        <hr>
+
+        <!-- Estado de "Login" Simulado -->
+        <div id="login-status" class="login-status unauthenticated">
+            Estado: No autenticado
+        </div>
+        <hr>
+
+        <!-- 1. Registro -->
+        <section id="register-section">
+             <h2>1. Registrar Nuevo Usuario (Hashing con Sal) 🔑</h2>
+            <p>La contraseña se envía al backend, donde se hashea con bcrypt (sal incluida automáticamente) antes de guardarla en SQL Server.</p>
+            <div class="interaction-box">
+                <label for="reg-username">Nuevo Usuario:</label>
+                <input type="text" id="reg-username" placeholder="Ej: testuser">
+
+                <label for="reg-password">Contraseña:</label>
+                <input type="password" id="reg-password" placeholder="Mínimo 6 caracteres">
+
+                <label for="reg-role">Rol:</label>
+                <select id="reg-role">
+                    <option value="user" selected>Usuario (user)</option>
+                    <option value="admin">Administrador (admin)</option>
+                </select>
+
+                <button onclick="registerUser()">Registrar</button>
+                <div class="output" id="register-output"></div>
+            </div>
+        </section>
+
+        <!-- 2. Login -->
+        <section id="login-section">
+             <h2>2. Iniciar Sesión (Verificación de Hash)</h2>
+            <p>Se envía usuario/contraseña al backend. El backend recupera el hash del usuario desde SQL Server y usa `bcrypt.compare()` para verificar si la contraseña coincide.</p>
+            <div class="interaction-box">
+                <label for="login-username">Usuario:</label>
+                <input type="text" id="login-username" placeholder="Usuario registrado">
+
+                <label for="login-password">Contraseña:</label>
+                <input type="password" id="login-password" placeholder="Tu contraseña">
+
+                <button onclick="loginUser()">Login</button>
+                 <button onclick="logoutUser()" id="logout-button" style="display: none; background-color: #e74c3c;">Logout</button>
+                <div class="output" id="login-output"></div>
+            </div>
+        </section>
+
+        <!-- 3. RBAC (Control de Acceso Basado en Roles) -->
+        <section id="rbac-section">
+             <h2>3. Probar Acceso Restringido (RBAC) 👥</h2>
+            <p>Intenta obtener la lista completa de usuarios. El backend solo permitirá esta acción si el usuario "logueado" (simulado aquí) tiene el rol 'admin'.</p>
+            <div class="interaction-box">
+                <button onclick="fetchAdminData()">Obtener Lista de Usuarios (Requiere Rol Admin)</button>
+                <div class="output" id="rbac-output"></div>
+            </div>
+            <small><i>La verificación real del rol ocurre en el backend (vía header simulado 'X-Simulated-Role' en esta demo). En producción se usaría un token/sesión.</i></small>
+        </section>
+
+         <!-- 4. Stored Procedures (Procedimientos Almacenados) -->
+        <section id="sp-section">
+            <h2>4. Probar Stored Procedure (Actualizar Username) 🗄️</h2>
+            <p>Llama a un endpoint del backend que, a su vez, ejecuta un Stored Procedure (`usp_UpdateUsername`) en SQL Server de forma segura (parametrizada) para cambiar el nombre de usuario.</p>
+            <div class="interaction-box">
+                <label for="sp-userid">UserID a modificar:</label>
+                <input type="number" id="sp-userid" placeholder="ID del usuario (ver consola post-login)">
+
+                <label for="sp-newusername">Nuevo Username:</label>
+                <input type="text" id="sp-newusername" placeholder="Nuevo nombre deseado">
+
+                <button onclick="callUpdateUsernameSP()">Ejecutar SP (vía Backend)</button>
+                <div class="output" id="sp-output"></div>
+            </div>
+             <small><i>El SP en SQL Server incluye lógica para evitar nombres duplicados y previene SQL Injection al ser llamado con parámetros desde el backend.</i></small>
+        </section>
+
+        <!-- 5. Cifrado en Tránsito y Reposo -->
+        <section id="encryption-section">
+            <h2>5. Cifrado en Tránsito y Reposo (Conceptual) 🔐</h2>
+            <p><strong>En Tránsito:</strong> Asegura que los datos viajen cifrados entre tu navegador y el servidor (HTTPS/TLS) y entre el servidor y la base de datos (opción `encrypt=true` en la conexión SQL).</p>
+            <p><strong>En Reposo:</strong> Protege los datos guardados físicamente en los archivos de la base de datos (Ej: SQL Server TDE o Cifrado a Nivel de Columna).</p>
+            <div class="interaction-box">
+                <div id="transit-status-display" class="transit-status" style="margin-bottom: 15px; padding: 10px; border-radius: 4px; border: 1px solid #ccc;">
+                     <!-- Se actualizará desde JS -->
+                     Cargando estado de conexión...
+                </div>
+                <button onclick="simulateSaveSensitiveData()">Simular Guardar Dato Sensible</button>
+                <div class="output" id="encryption-output"></div>
+            </div>
+            <small><i>Nota: HTTPS se configura en el servidor web (Node.js con módulo 'https', Nginx, etc.). El cifrado en reposo se activa y gestiona en SQL Server. La conexión Node-SQL ya usa `encrypt=true`.</i></small>
+        </section>
+
+        <!-- 6. Autenticación Multifactor (MFA) -->
+        <section id="mfa-section">
+            <h2>6. Autenticación Multifactor - MFA (Conceptual) 🔒</h2>
+            <p>Requiere más de una prueba de identidad para iniciar sesión (algo que sabes + algo que tienes + algo que eres). Aumenta drásticamente la seguridad de las cuentas.</p>
+            <div class="interaction-box">
+                 <button onclick="simulateMFA()">Simular Flujo de Login con MFA</button>
+                 <div class="output" id="mfa-output"></div>
+            </div>
+             <small><i>Nota: MFA se implementa en la capa de aplicación (backend) o integrándose con proveedores de identidad (Azure AD, Okta, Auth0, etc.).</i></small>
+        </section>
+
+        <!-- 7. Always Encrypted -->
+        <section id="alwaysencrypted-section">
+            <h2>7. Always Encrypted (Conceptual) 🛡️</h2>
+            <p>Característica de SQL Server donde datos muy sensibles son cifrados por el *driver* del cliente antes de enviarlos a la BD. Ni siquiera los administradores de BD (DBAs) pueden ver los datos en claro directamente en la base de datos.</p>
+             <div class="interaction-box">
+                 <button onclick="simulateAlwaysEncrypted()">Simular Consulta con Always Encrypted</button>
+                 <div class="output" id="always-encrypted-output"></div>
+            </div>
+             <small><i>Nota: Requiere configuración compleja en SQL Server (claves maestras, claves de columna) y el uso de drivers/librerías compatibles en la aplicación cliente (backend).</i></small>
+        </section>
+
+        <!-- 8. Otros Conceptos Importantes -->
+        <section id="info-section">
+            <h2>8. Otros Conceptos de Seguridad Importantes</h2>
+            <ul>
+                <li><strong>Manejo Seguro de Sesiones/Tokens:</strong> Usar tokens seguros (JWT firmados, HttpOnly, Secure cookies) en lugar de la simulación de login de esta demo.</li>
+                <li><strong>Validación de Entradas Rigurosa:</strong> Validar y sanear *todas* las entradas del usuario en el backend para prevenir XSS, etc.</li>
+                <li><strong>Principio de Menor Privilegio:</strong> Otorgar solo los permisos estrictamente necesarios a usuarios y aplicaciones en la BD y el sistema.</li>
+                <li><strong>Actualizaciones y Parches:</strong> Mantener actualizados el SO, Node.js, SQL Server y todas las dependencias (npm audit).</li>
+                <li><strong>Auditoría y Logs:</strong> Registrar eventos importantes (logins, fallos, cambios críticos) para detección y análisis de incidentes.</li>
+                 <li><strong>Protección contra Ataques Comunes:</strong> CSRF, XSS, DoS, etc. Usar librerías y configuraciones adecuadas (ej: `helmet` para Node.js).</li>
+            </ul>
+        </section>
+
+    </div>
+
+    <!-- El script JS al final del body -->
+    <script src="script.js"></script>
+</body>
+</html>
