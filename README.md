@@ -3,11 +3,19 @@
 [![Estado del Repo](https://img.shields.io/badge/Estado-Educativo_/_Demo-blue)](https://github.com/TU_USUARIO_GITHUB/NOMBRE_DEL_REPO) <!-- ¡Reemplaza con tu usuario y repo! -->
 [![Licencia](https://img.shields.io/badge/Licencia-MIT-green)](./LICENSE) <!-- Puedes añadir un archivo LICENSE si quieres -->
 
-## 💡 Introducción: ¡Protege Tus Datos Como un Pro! 🔒
+## 👨‍🏫 De la Charla a la Práctica: Una Demo para Aprender Juntos 💡
 
-¡Saludos, desarrolladores y entusiastas de la seguridad! 👋 Inspirado en la importancia de proteger nuestros datos, este repositorio presenta una **demo funcional y educativa** diseñada para ilustrar conceptos clave de seguridad en el desarrollo de software backend, utilizando Node.js y SQL Server.
+¡Hola a todos! 👋
 
-🌟 Como bien sabemos, en el mundo digital actual, la seguridad de los datos se ha convertido en una prioridad más crítica que nunca. Ya sea que estés desarrollando una aplicación, analizando información sensible o administrando una base de datos, la protección de los datos debe estar siempre en el primer lugar de tu lista de tareas. 🚀
+Hace unos días, tuve el placer de participar como invitado en una clase enfocada en las **buenas prácticas para el desarrollo de aplicaciones seguras**. Dentro de los temas, me tocó explorar tecnologías robustas como **SQL Server** y, como soy un apasionado de la programación web y especialmente de **JavaScript**, no pude evitar hablar de cómo **Node.js** y **Express** se integran en este ecosistema para construir backends modernos.
+
+Durante la sesión, mientras discutíamos la teoría detrás de conceptos vitales de seguridad, surgió la necesidad de **aterrizar esas ideas en un ejemplo práctico y tangible**. Me di cuenta de que, más allá de las diapositivas, tener un código funcional que los estudiantes y entusiastas pudieran **ver, ejecutar y modificar** sería una herramienta de aprendizaje mucho más poderosa.
+
+Este repositorio es, en esencia, el resultado (un poco más, un poco menos 😉) de ese ejercicio: una **demo funcional** diseñada específicamente para ilustrar, de manera interactiva, los conceptos de seguridad que abordamos. La idea es mostrar *cómo* se aplican estas técnicas en un entorno real (simulado, claro está) usando las tecnologías que mencionamos.
+
+**Y es que, como comentamos en la sesión...** 🚀
+
+En el mundo digital actual, la seguridad de los datos se ha convertido en una prioridad más crítica que nunca. Ya sea que estés desarrollando una aplicación, analizando información sensible o administrando una base de datos, la protección de los datos debe estar siempre en el primer lugar de tu lista de tareas.
 
 **¿Por qué es tan importante? 🤔**
 
