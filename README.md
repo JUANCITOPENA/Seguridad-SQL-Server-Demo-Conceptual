@@ -17,6 +17,9 @@ Este repositorio es, en esencia, el resultado (un poco más, un poco menos 😉)
 
 En el mundo digital actual, la seguridad de los datos se ha convertido en una prioridad más crítica que nunca. Ya sea que estés desarrollando una aplicación, analizando información sensible o administrando una base de datos, la protección de los datos debe estar siempre en el primer lugar de tu lista de tareas.
 
+
+
+
 **¿Por qué es tan importante? 🤔**
 
 *   **Confidencialidad:** Mantenemos los datos lejos de ojos curiosos. 🔍
