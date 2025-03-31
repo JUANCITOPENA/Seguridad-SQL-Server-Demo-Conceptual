@@ -142,19 +142,27 @@ Una vez que la aplicación esté corriendo:
 
 ---
 
-## ⚠️ Disclaimer Importante
+---
 
-Esta es una **demo con fines exclusivamente educativos**. Para un entorno de producción real, se requiere un endurecimiento significativo, incluyendo (pero no limitado a):
+## ⚠️ Disclaimer Importante y Nota sobre Tecnologías
+
+Esta es una **demo con fines exclusivamente educativos**. Nació de la necesidad de ilustrar conceptos de seguridad durante una charla, utilizando las herramientas disponibles en ese momento.
+
+**Nota sobre SQL Server:** Es bueno recordar que el uso de **SQL Server** en esta demo fue una elección basada en la disponibilidad y familiaridad durante la preparación de la charla, y dado el poco tiempo. ¡No es necesariamente la opción más "habitual" para todos los proyectos Node.js! Existen muchas otras excelentes opciones de bases de datos (relacionales como **MySQL**, **PostgreSQL**; NoSQL como **MongoDB**) y plataformas de bases de datos en la nube (Azure SQL Database, AWS RDS, Google Cloud SQL, Vercel Postgres, PlanetScale, MongoDB Atlas, etc.). **La idea es que estos principios de seguridad son aplicables independientemente de la base de datos específica**, aunque la implementación de algunos detalles (como el cifrado en reposo o la sintaxis exacta) variará. **En un ambiente real, la elección tecnológica debe ajustarse cuidadosamente a los requisitos, escala, presupuesto y ecosistema del proyecto.**
+
+**Para un entorno de producción real, se requiere un endurecimiento significativo, incluyendo (pero no limitado a):**
 
 *   **HTTPS Obligatorio:** Configurar certificados SSL/TLS válidos en el servidor Node.js (o a través de un proxy inverso como Nginx/Apache).
-*   **Gestión Segura de Secretos:** No hardcodear credenciales ni secretos; usar variables de entorno gestionadas de forma segura (ej: Azure Key Vault, AWS Secrets Manager, HashiCorp Vault).
-*   **Manejo de Errores Robusto:** Implementar un manejo de errores más detallado y evitar filtrar información sensible en los mensajes de error.
-*   **Rate Limiting y Protección DoS:** Implementar medidas para prevenir abuso y ataques de denegación de servicio.
-*   **Pruebas de Seguridad:** Realizar pruebas de penetración y análisis de vulnerabilidades.
-*   **Logging y Monitorización Avanzados:** Usar sistemas de logging centralizados y monitorización de seguridad.
-*   **Configuración de CORS más Restrictiva:** Ajustar el origen permitido en `cors` a tu dominio de producción específico.
-*   **Política de Contraseñas Fuerte:** Implementar requisitos de complejidad y rotación de contraseñas.
-*   **Auditoría Formal:** Configurar auditoría detallada en SQL Server y en la aplicación.
+*   **Gestión Segura de Secretos:** No hardcodear credenciales ni secretos; usar variables de entorno gestionadas de forma segura (ej: Azure Key Vault, AWS Secrets Manager, HashiCorp Vault, secretos de la plataforma de despliegue).
+*   **Manejo de Errores Robusto:** Implementar un manejo de errores más detallado y evitar filtrar información sensible en los mensajes de error expuestos al cliente.
+*   **Rate Limiting y Protección DoS:** Implementar medidas para prevenir abuso y ataques de denegación de servicio (ej: `express-rate-limit`).
+*   **Pruebas de Seguridad:** Realizar pruebas de penetración (Pen Testing) y análisis de vulnerabilidades de forma regular.
+*   **Logging y Monitorización Avanzados:** Usar sistemas de logging centralizados (ELK Stack, Splunk, Datadog) y monitorización de seguridad activa.
+*   **Configuración de CORS más Restrictiva:** Ajustar el origen permitido en `cors` a tu dominio(s) de producción específico(s).
+*   **Política de Contraseñas Fuerte:** Implementar requisitos de complejidad, historial y rotación de contraseñas si manejas autenticación propia.
+*   **Auditoría Formal:** Configurar auditoría detallada en la base de datos (si aplica) y registrar eventos de seguridad clave en la aplicación.
+*   **Dependencias Actualizadas:** Mantener todas las dependencias (`npm audit`) actualizadas y parcheadas.
+*   **Configuración Segura del Servidor/Plataforma:** Asegurar la configuración del sistema operativo, la red y la plataforma de despliegue.
 
 ---
 
