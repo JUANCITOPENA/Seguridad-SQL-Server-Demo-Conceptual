@@ -74,7 +74,7 @@ Sigue estos pasos para poner en marcha la demo en tu máquina:
 
 1.  **Clonar o Descargar:**
     ```bash
-    git clone https://github.com/TU_USUARIO_GITHUB/NOMBRE_DEL_REPO.git # ¡Reemplaza!
+    git clone https://github.com/JUANCITOPENA/Seguridad-SQL-Server-Demo-Conceptual # ¡Reemplaza!
     cd NOMBRE_DEL_REPO
     ```
     O descarga el ZIP y descomprímelo.
